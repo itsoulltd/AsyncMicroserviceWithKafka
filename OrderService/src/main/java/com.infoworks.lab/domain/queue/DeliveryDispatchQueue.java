@@ -7,24 +7,22 @@ import com.infoworks.lab.beans.tasks.definition.TaskQueue;
 import com.infoworks.lab.rest.models.Message;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-@Primary
-@Component("taskDispatchQueue")
-public class TaskDispatchQueue extends AbstractTaskQueue {
+@Component("deliveryDispatchQueue")
+public class DeliveryDispatchQueue extends AbstractTaskQueue {
 
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public TaskDispatchQueue(@Qualifier("kafkaTextTemplate") KafkaTemplate kafkaTemplate) {
+    public DeliveryDispatchQueue(@Qualifier("kafkaTextTemplate") KafkaTemplate kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @Value("${topic.execute}")
+    @Value("${topic.delivery.execute}")
     private String exeQueue;
 
-    @Value("${topic.abort}")
+    @Value("${topic.delivery.abort}")
     private String abortQueue;
 
     @Override

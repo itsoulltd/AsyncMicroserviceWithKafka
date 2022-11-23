@@ -5,14 +5,13 @@ import com.infoworks.lab.beans.tasks.definition.TaskQueue;
 import com.infoworks.lab.domain.tasks.ConsolePrintTask;
 import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
+import com.infoworks.lab.rest.models.events.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
@@ -20,9 +19,12 @@ public class OrderController implements TaskCompletionListener {
 
     private static Logger LOG = LoggerFactory.getLogger(OrderController.class.getSimpleName());
     private TaskQueue taskQueue;
+    private TaskQueue deliveryQueue;
 
-    public OrderController(TaskQueue taskQueue) {
+    public OrderController(TaskQueue taskQueue
+            , @Qualifier("deliveryDispatchQueue") TaskQueue deliveryQueue) {
         this.taskQueue = taskQueue;
+        this.deliveryQueue = deliveryQueue;
     }
 
     @GetMapping("/print/{message}")
@@ -32,6 +34,15 @@ public class OrderController implements TaskCompletionListener {
         consolePrintTask.setMessage(mac);
         taskQueue.add(consolePrintTask);
         return new ResponseEntity(message, HttpStatus.OK);
+    }
+
+    @PostMapping("/delivery")
+    public ResponseEntity<Response> dispatchDelivery(@RequestBody Event checkout) {
+        Response response = (Response) new Response().setEvent(checkout);
+        ConsolePrintTask console = new ConsolePrintTask();
+        console.setMessage(response);
+        deliveryQueue.add(console);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @Override
