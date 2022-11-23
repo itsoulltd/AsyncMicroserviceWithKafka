@@ -27,7 +27,7 @@ public class OrderController implements TaskCompletionListener {
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
-        Message mac = new Response().setMessage(message);
+        Message mac = new Response().setMessage("OrderController: " + message);
         ConsolePrintTask consolePrintTask = new ConsolePrintTask();
         consolePrintTask.setMessage(mac);
         taskQueue.add(consolePrintTask);

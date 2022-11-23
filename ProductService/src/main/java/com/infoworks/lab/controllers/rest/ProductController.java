@@ -27,7 +27,7 @@ public class ProductController implements TaskCompletionListener {
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
-        Message mac = new Response().setMessage(message);
+        Message mac = new Response().setMessage("ProductController: " + message);
         ConsolePrintTask consolePrintTask = new ConsolePrintTask();
         consolePrintTask.setMessage(mac);
         taskQueue.add(consolePrintTask);
