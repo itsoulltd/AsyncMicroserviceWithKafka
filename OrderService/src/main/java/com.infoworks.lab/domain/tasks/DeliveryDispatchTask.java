@@ -4,7 +4,7 @@ import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
 import com.infoworks.lab.rest.models.events.Event;
 
-public class DeliveryConfirmTask extends BaseDeliveryTask<Message, Response> {
+public class DeliveryDispatchTask extends BaseDeliveryTask<Message, Response> {
 
     @Override
     public Response execute(Message message) throws RuntimeException {
