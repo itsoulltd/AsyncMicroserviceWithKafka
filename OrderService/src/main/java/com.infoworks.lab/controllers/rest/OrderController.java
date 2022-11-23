@@ -37,8 +37,8 @@ public class OrderController implements TaskCompletionListener {
     }
 
     @PostMapping("/delivery")
-    public ResponseEntity<Response> dispatchDelivery(@RequestBody Event checkout) {
-        Response response = (Response) new Response().setEvent(checkout);
+    public ResponseEntity<Response> dispatchDelivery(@RequestBody Event delivery) {
+        Response response = (Response) new Response().setEvent(delivery);
         ConsolePrintTask console = new ConsolePrintTask();
         console.setMessage(response);
         deliveryQueue.add(console);
