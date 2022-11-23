@@ -2,7 +2,6 @@ package com.infoworks.lab.controllers.rest;
 
 import com.infoworks.lab.beans.tasks.definition.TaskCompletionListener;
 import com.infoworks.lab.beans.tasks.definition.TaskQueue;
-import com.infoworks.lab.beans.tasks.nuts.SimpleTask;
 import com.infoworks.lab.domain.tasks.ConsolePrintTask;
 import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
@@ -22,7 +21,7 @@ public class PaymentController implements TaskCompletionListener {
     private TaskQueue taskQueue;
     private TaskQueue orderQueue;
 
-    public PaymentController(@Qualifier("taskDispatchQueue") TaskQueue taskQueue
+    public PaymentController(TaskQueue taskQueue
             , @Qualifier("orderDispatchQueue") TaskQueue orderQueue) {
         this.taskQueue = taskQueue;
         this.orderQueue = orderQueue;
