@@ -1,9 +1,5 @@
 package com.infoworks.lab.controllers.rest;
 
-import com.infoworks.lab.beans.tasks.definition.TaskCompletionListener;
-import com.infoworks.lab.beans.tasks.definition.TaskQueue;
-import com.infoworks.lab.domain.tasks.ConsolePrintTask;
-import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
 import com.infoworks.lab.rest.models.SearchQuery;
 import org.slf4j.Logger;
@@ -15,21 +11,16 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/v1")
-public class ProductController implements TaskCompletionListener {
+public class ProductController {
 
     private static Logger LOG = LoggerFactory.getLogger(ProductController.class.getSimpleName());
-    private TaskQueue taskQueue;
 
-    public ProductController(TaskQueue taskQueue) {
-        this.taskQueue = taskQueue;
+    public ProductController() {
+        //
     }
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
-        Message mac = new Response().setMessage("ProductController: " + message);
-        ConsolePrintTask consolePrintTask = new ConsolePrintTask();
-        consolePrintTask.setMessage(mac);
-        taskQueue.add(consolePrintTask);
         return new ResponseEntity(message, HttpStatus.OK);
     }
 
@@ -48,15 +39,4 @@ public class ProductController implements TaskCompletionListener {
         return new ResponseEntity(res.getBody(), HttpStatus.OK);
     }
 
-    @Override
-    public void failed(Message message) {
-        System.out.println("RUNNING ON " + Thread.currentThread().getName());
-        System.out.println(message.toString());
-    }
-
-    @Override
-    public void finished(Message message) {
-        System.out.println("RUNNING ON " + Thread.currentThread().getName());
-        System.out.println(message.toString());
-    }
 }
