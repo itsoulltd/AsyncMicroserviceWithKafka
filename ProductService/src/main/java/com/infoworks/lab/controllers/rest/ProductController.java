@@ -1,5 +1,8 @@
 package com.infoworks.lab.controllers.rest;
 
+import com.infoworks.lab.beans.tasks.definition.TaskQueue;
+import com.infoworks.lab.domain.tasks.ConsolePrintTask;
+import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
 import com.infoworks.lab.rest.models.SearchQuery;
 import org.slf4j.Logger;
@@ -14,13 +17,17 @@ import org.springframework.web.client.RestTemplate;
 public class ProductController {
 
     private static Logger LOG = LoggerFactory.getLogger(ProductController.class.getSimpleName());
+    private TaskQueue queue;
 
-    public ProductController() {
-        //
+    public ProductController(TaskQueue queue) {
+        this.queue = queue;
     }
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
+        ConsolePrintTask task = new ConsolePrintTask();
+        task.setMessage(new Message().setPayload("ProductService" + message));
+        queue.add(task);
         return new ResponseEntity(message, HttpStatus.OK);
     }
 
