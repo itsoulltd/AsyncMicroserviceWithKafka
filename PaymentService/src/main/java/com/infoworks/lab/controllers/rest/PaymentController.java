@@ -1,53 +1,64 @@
 package com.infoworks.lab.controllers.rest;
 
-import com.infoworks.lab.beans.tasks.definition.TaskCompletionListener;
-import com.infoworks.lab.beans.tasks.definition.TaskQueue;
-import com.infoworks.lab.domain.tasks.ConsolePrintTask;
-import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
 import com.infoworks.lab.rest.models.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
-public class PaymentController implements TaskCompletionListener {
+public class PaymentController {
 
     private static Logger LOG = LoggerFactory.getLogger(PaymentController.class.getSimpleName());
-    private TaskQueue taskQueue;
+    private KafkaTemplate<String, String> kafkaTemplate;
+    private String orderQueue;
+    private String orderAbortQueue;
 
-    public PaymentController(TaskQueue taskQueue) {
-        this.taskQueue = taskQueue;
+    public PaymentController(@Qualifier("kafkaTextTemplate") KafkaTemplate kafkaTemplate
+            , @Value("${topic.order.execute}") String orderQueue
+            , @Value("${topic.order.abort}") String orderAbortQueue ) {
+        this.kafkaTemplate = kafkaTemplate;
+        this.orderQueue = orderQueue;
+        this.orderAbortQueue = orderAbortQueue;
     }
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
-        Message mac = new Response().setMessage("PaymentController: " + message);
-        ConsolePrintTask consolePrintTask = new ConsolePrintTask();
-        consolePrintTask.setMessage(mac);
-        taskQueue.add(consolePrintTask);
         return new ResponseEntity(message, HttpStatus.OK);
     }
 
     @PostMapping("/checkout")
     public ResponseEntity<Response> checkout(@RequestBody SearchQuery purchase) {
-        Response response = (Response) new Response().setEvent(purchase);
-        //TODO:
+        Response response = (Response) new Response().setMessage("Action Queued!");
+        //Make decision based on message
+        kafkaTemplate.send(orderQueue, purchase.toString());
+        //or kafkaTemplate.send(orderAbortQueue, "Alert!!!");
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @Override
-    public void failed(Message message) {
-        System.out.println("RUNNING ON " + Thread.currentThread().getName());
-        System.out.println(message.toString());
+    @KafkaListener(topics = {"${topic.execute}"}, concurrency = "1")
+    public void startListener(@Payload String message, Acknowledgment ack) {
+        //Retrieve the message content
+        LOG.info("EXE-QUEUE: Message received {} ", message);
+        //TODO:
+        ack.acknowledge();
     }
 
-    @Override
-    public void finished(Message message) {
-        System.out.println("RUNNING ON " + Thread.currentThread().getName());
-        System.out.println(message.toString());
+    @KafkaListener(topics = {"${topic.abort}"}, concurrency = "1")
+    public void abortListener(@Payload String message, Acknowledgment ack) {
+        //Retrieve the message content
+        LOG.info("ABORT-QUEUE: Message received {} ", message);
+        //TODO:
+        ack.acknowledge();
     }
+
 }
