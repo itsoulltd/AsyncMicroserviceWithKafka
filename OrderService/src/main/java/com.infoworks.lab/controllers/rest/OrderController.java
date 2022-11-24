@@ -43,12 +43,11 @@ public class OrderController {
 
     @KafkaListener(topics = {"${topic.execute}"}, concurrency = "1")
     public void startListener(@Payload String message, Acknowledgment ack) {
-        //Retrieve the message content
         LOG.info("ORDER-EXE-QUEUE: Message received {} ", message);
         try {
             //Type-2:DispatchTaskInto-KafkaQueue:-
             SearchQuery query = Message.unmarshal(SearchQuery.class, message);
-            query.add("orderId").isEqualTo("92137")
+            query.add("delivery-id").isEqualTo("92137")
                     .and("status").isEqualTo("SUCCESS");
             kafkaTemplate.send(deliveryQueue, query.toString());
         } catch (IOException e) {
@@ -59,7 +58,6 @@ public class OrderController {
 
     @KafkaListener(topics = {"${topic.abort}"}, concurrency = "1")
     public void abortListener(@Payload String message, Acknowledgment ack) {
-        //Retrieve the message content
         LOG.info("ORDER-ABORT-QUEUE: Message received {} ", message);
         //TODO:
         ack.acknowledge();

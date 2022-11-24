@@ -36,7 +36,6 @@ public class DeliveryController {
 
     @KafkaListener(topics = {"${topic.execute}"}, concurrency = "1")
     public void startListener(@Payload String message, Acknowledgment ack) {
-        //Retrieve the message content
         LOG.info("DELIVERY-EXE-QUEUE: Message received {} ", message);
         try {
             //Dispatch Into Queue:
@@ -54,7 +53,6 @@ public class DeliveryController {
 
     @KafkaListener(topics = {"${topic.abort}"}, concurrency = "1")
     public void abortListener(@Payload String message, Acknowledgment ack) {
-        //Retrieve the message content
         LOG.info("DELIVERY-ABORT-QUEUE: Message received {} ", message);
         //TODO:
         ack.acknowledge();

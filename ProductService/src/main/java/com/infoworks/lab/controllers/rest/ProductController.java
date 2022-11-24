@@ -34,16 +34,17 @@ public class ProductController {
 
     @PostMapping("/purchase")
     public ResponseEntity<Response> purchase(@RequestBody SearchQuery purchase) {
+        LOG.info("PURCHASE: Message received {} ", purchase.toString());
         //Call RestTemplate: api/payment/v1/checkout
         RestTemplate template = new RestTemplateBuilder()
                 .rootUri("http://localhost:8092/api/payment")
                 .build();
+        purchase.add("order-id").isEqualTo("01928374");
         HttpEntity<SearchQuery> entity = new HttpEntity<>(purchase, new HttpHeaders());
         ResponseEntity<Response> res = template.exchange("/v1/checkout"
                 , HttpMethod.POST
                 , entity
                 , Response.class);
-        //
         return new ResponseEntity(res.getBody(), HttpStatus.OK);
     }
 

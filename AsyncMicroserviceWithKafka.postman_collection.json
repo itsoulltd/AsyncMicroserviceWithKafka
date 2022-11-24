@@ -1,0 +1,847 @@
+{
+	"info": {
+		"_postman_id": "1196cd8b-d75a-41d4-bfd1-4f6ccb2aae7c",
+		"name": "AsyncMicroserviceWithKafka",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "purchase",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"page\": 0,\n  \"properties\": [\n    {\n      \"key\": \"user-id\",\n      \"logic\": \"AND\",\n      \"nextKey\": null,\n      \"operator\": \"EQUAL\",\n      \"type\": \"STRING\",\n      \"value\": \"001882\"\n    },\n    {\n      \"key\": \"amount\",\n      \"logic\": \"AND\",\n      \"nextKey\": null,\n      \"operator\": \"EQUAL\",\n      \"type\": \"BIG_DECIMAL\",\n      \"value\": \"100.00\"\n    }\n  ],\n  \"size\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}/v1/purchase",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"v1",
+								"purchase"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"sint eu\",\n        \"laborum officia anim ut tempor\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"cupidatat aute\",\n        \"proident culpa consectetur pariatur\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"RESUME\",\n  \"page\": 54045097,\n  \"properties\": [\n    {\n      \"key\": \"eiusmod\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"minim ullamco sed\",\n      \"operator\": \"!=\",\n      \"type\": \"FLOAT\",\n      \"value\": \"in nulla dolor\"\n    },\n    {\n      \"key\": \"ullamco officia\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"cillum qui\",\n      \"operator\": \"IS NULL\",\n      \"type\": \"BOOL\",\n      \"value\": \"amet\"\n    }\n  ],\n  \"size\": 15631369,\n  \"timestamp\": \"nostrud\",\n  \"uuid\": \"venia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/purchase",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"purchase"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"sint eu\",\n        \"laborum officia anim ut tempor\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"cupidatat aute\",\n        \"proident culpa consectetur pariatur\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"RESUME\",\n  \"page\": 54045097,\n  \"properties\": [\n    {\n      \"key\": \"eiusmod\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"minim ullamco sed\",\n      \"operator\": \"!=\",\n      \"type\": \"FLOAT\",\n      \"value\": \"in nulla dolor\"\n    },\n    {\n      \"key\": \"ullamco officia\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"cillum qui\",\n      \"operator\": \"IS NULL\",\n      \"type\": \"BOOL\",\n      \"value\": \"amet\"\n    }\n  ],\n  \"size\": 15631369,\n  \"timestamp\": \"nostrud\",\n  \"uuid\": \"venia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/purchase",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"purchase"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"sint eu\",\n        \"laborum officia anim ut tempor\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"cupidatat aute\",\n        \"proident culpa consectetur pariatur\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"RESUME\",\n  \"page\": 54045097,\n  \"properties\": [\n    {\n      \"key\": \"eiusmod\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"minim ullamco sed\",\n      \"operator\": \"!=\",\n      \"type\": \"FLOAT\",\n      \"value\": \"in nulla dolor\"\n    },\n    {\n      \"key\": \"ullamco officia\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"cillum qui\",\n      \"operator\": \"IS NULL\",\n      \"type\": \"BOOL\",\n      \"value\": \"amet\"\n    }\n  ],\n  \"size\": 15631369,\n  \"timestamp\": \"nostrud\",\n  \"uuid\": \"venia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/purchase",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"purchase"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"sint eu\",\n        \"laborum officia anim ut tempor\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"cupidatat aute\",\n        \"proident culpa consectetur pariatur\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"RESUME\",\n  \"page\": 54045097,\n  \"properties\": [\n    {\n      \"key\": \"eiusmod\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"minim ullamco sed\",\n      \"operator\": \"!=\",\n      \"type\": \"FLOAT\",\n      \"value\": \"in nulla dolor\"\n    },\n    {\n      \"key\": \"ullamco officia\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"cillum qui\",\n      \"operator\": \"IS NULL\",\n      \"type\": \"BOOL\",\n      \"value\": \"amet\"\n    }\n  ],\n  \"size\": 15631369,\n  \"timestamp\": \"nostrud\",\n  \"uuid\": \"venia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/purchase",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"purchase"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"sint eu\",\n        \"laborum officia anim ut tempor\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"cupidatat aute\",\n        \"proident culpa consectetur pariatur\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"RESUME\",\n  \"page\": 54045097,\n  \"properties\": [\n    {\n      \"key\": \"eiusmod\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"minim ullamco sed\",\n      \"operator\": \"!=\",\n      \"type\": \"FLOAT\",\n      \"value\": \"in nulla dolor\"\n    },\n    {\n      \"key\": \"ullamco officia\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"cillum qui\",\n      \"operator\": \"IS NULL\",\n      \"type\": \"BOOL\",\n      \"value\": \"amet\"\n    }\n  ],\n  \"size\": 15631369,\n  \"timestamp\": \"nostrud\",\n  \"uuid\": \"venia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/purchase",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"purchase"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "print",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{productUrl}}/v1/print/:message",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"v1",
+								"print",
+								":message"
+							],
+							"variable": [
+								{
+									"key": "message",
+									"value": "do amet consequat nostrud",
+									"description": "(Required) message"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "do amet consequat nostrud",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "do amet consequat nostrud"
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "do amet consequat nostrud",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "do amet consequat nostrud",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "do amet consequat nostrud",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "checkout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"page\": 0,\n  \"properties\": [\n    {\n      \"key\": \"user-id\",\n      \"logic\": \"AND\",\n      \"nextKey\": null,\n      \"operator\": \"EQUAL\",\n      \"type\": \"STRING\",\n      \"value\": \"001882\"\n    },\n    {\n      \"key\": \"amount\",\n      \"logic\": \"AND\",\n      \"nextKey\": null,\n      \"operator\": \"EQUAL\",\n      \"type\": \"BIG_DECIMAL\",\n      \"value\": \"100.00\"\n    },\n    {\n      \"key\": \"order-id\",\n      \"logic\": \"AND\",\n      \"nextKey\": null,\n      \"operator\": \"EQUAL\",\n      \"type\": \"STRING\",\n      \"value\": \"01928374\"\n    }\n  ],\n  \"size\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{paymentUrl}}/v1/checkout",
+							"host": [
+								"{{paymentUrl}}"
+							],
+							"path": [
+								"v1",
+								"checkout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"tempor do id\",\n        \"consequ\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"i\",\n        \"est laboris\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"STOP\",\n  \"page\": 94823487,\n  \"properties\": [\n    {\n      \"key\": \"ad reprehenderit sed\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"ad dolor deserunt et ipsum\",\n      \"operator\": \"DESC\",\n      \"type\": \"UUID\",\n      \"value\": \"cillum\"\n    },\n    {\n      \"key\": \"consequat sit\",\n      \"logic\": \"||\",\n      \"nextKey\": \"exercitation nostrud sit Duis\",\n      \"operator\": \"<=\",\n      \"type\": \"MAP\",\n      \"value\": \"ut\"\n    }\n  ],\n  \"size\": -58028677,\n  \"timestamp\": \"in labor\",\n  \"uuid\": \"Ut ea\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/checkout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"checkout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"tempor do id\",\n        \"consequ\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"i\",\n        \"est laboris\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"STOP\",\n  \"page\": 94823487,\n  \"properties\": [\n    {\n      \"key\": \"ad reprehenderit sed\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"ad dolor deserunt et ipsum\",\n      \"operator\": \"DESC\",\n      \"type\": \"UUID\",\n      \"value\": \"cillum\"\n    },\n    {\n      \"key\": \"consequat sit\",\n      \"logic\": \"||\",\n      \"nextKey\": \"exercitation nostrud sit Duis\",\n      \"operator\": \"<=\",\n      \"type\": \"MAP\",\n      \"value\": \"ut\"\n    }\n  ],\n  \"size\": -58028677,\n  \"timestamp\": \"in labor\",\n  \"uuid\": \"Ut ea\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/checkout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"checkout"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"tempor do id\",\n        \"consequ\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"i\",\n        \"est laboris\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"STOP\",\n  \"page\": 94823487,\n  \"properties\": [\n    {\n      \"key\": \"ad reprehenderit sed\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"ad dolor deserunt et ipsum\",\n      \"operator\": \"DESC\",\n      \"type\": \"UUID\",\n      \"value\": \"cillum\"\n    },\n    {\n      \"key\": \"consequat sit\",\n      \"logic\": \"||\",\n      \"nextKey\": \"exercitation nostrud sit Duis\",\n      \"operator\": \"<=\",\n      \"type\": \"MAP\",\n      \"value\": \"ut\"\n    }\n  ],\n  \"size\": -58028677,\n  \"timestamp\": \"in labor\",\n  \"uuid\": \"Ut ea\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/checkout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"checkout"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"tempor do id\",\n        \"consequ\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"i\",\n        \"est laboris\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"STOP\",\n  \"page\": 94823487,\n  \"properties\": [\n    {\n      \"key\": \"ad reprehenderit sed\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"ad dolor deserunt et ipsum\",\n      \"operator\": \"DESC\",\n      \"type\": \"UUID\",\n      \"value\": \"cillum\"\n    },\n    {\n      \"key\": \"consequat sit\",\n      \"logic\": \"||\",\n      \"nextKey\": \"exercitation nostrud sit Duis\",\n      \"operator\": \"<=\",\n      \"type\": \"MAP\",\n      \"value\": \"ut\"\n    }\n  ],\n  \"size\": -58028677,\n  \"timestamp\": \"in labor\",\n  \"uuid\": \"Ut ea\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/checkout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"checkout"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptors\": [\n    {\n      \"keys\": [\n        \"tempor do id\",\n        \"consequ\"\n      ],\n      \"order\": \"DESC\"\n    },\n    {\n      \"keys\": [\n        \"i\",\n        \"est laboris\"\n      ],\n      \"order\": \"ASC\"\n    }\n  ],\n  \"eventType\": \"STOP\",\n  \"page\": 94823487,\n  \"properties\": [\n    {\n      \"key\": \"ad reprehenderit sed\",\n      \"logic\": \"&&\",\n      \"nextKey\": \"ad dolor deserunt et ipsum\",\n      \"operator\": \"DESC\",\n      \"type\": \"UUID\",\n      \"value\": \"cillum\"\n    },\n    {\n      \"key\": \"consequat sit\",\n      \"logic\": \"||\",\n      \"nextKey\": \"exercitation nostrud sit Duis\",\n      \"operator\": \"<=\",\n      \"type\": \"MAP\",\n      \"value\": \"ut\"\n    }\n  ],\n  \"size\": -58028677,\n  \"timestamp\": \"in labor\",\n  \"uuid\": \"Ut ea\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/checkout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"checkout"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "print",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{paymentUrl}}/v1/print/:message",
+							"host": [
+								"{{paymentUrl}}"
+							],
+							"path": [
+								"v1",
+								"print",
+								":message"
+							],
+							"variable": [
+								{
+									"key": "message",
+									"value": "consectetur sint est",
+									"description": "(Required) message"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "consectetur sint est",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "consectetur sint est"
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "consectetur sint est",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "consectetur sint est",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/print/:message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"print",
+										":message"
+									],
+									"variable": [
+										{
+											"key": "message",
+											"value": "consectetur sint est",
+											"description": "(Required) message"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "productUrl",
+			"value": "http://localhost:8091/api/product",
+			"type": "default"
+		},
+		{
+			"key": "paymentUrl",
+			"value": "http://localhost:8092/api/payment",
+			"type": "default"
+		}
+	]
+}
