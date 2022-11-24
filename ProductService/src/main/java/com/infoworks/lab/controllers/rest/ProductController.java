@@ -5,16 +5,13 @@ import com.infoworks.lab.beans.tasks.definition.TaskQueue;
 import com.infoworks.lab.domain.tasks.ConsolePrintTask;
 import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
-import com.infoworks.lab.rest.models.events.Event;
-import com.infoworks.lab.rest.models.events.EventType;
+import com.infoworks.lab.rest.models.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/v1")
@@ -37,12 +34,12 @@ public class ProductController implements TaskCompletionListener {
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<Response> purchase(@RequestBody Event purchase) {
+    public ResponseEntity<Response> purchase(@RequestBody SearchQuery purchase) {
         //Call RestTemplate: api/payment/v1/checkout
         RestTemplate template = new RestTemplateBuilder()
                 .rootUri("http://localhost:8092/api/payment")
                 .build();
-        HttpEntity<Event> entity = new HttpEntity<>(purchase, new HttpHeaders());
+        HttpEntity<SearchQuery> entity = new HttpEntity<>(purchase, new HttpHeaders());
         ResponseEntity<Response> res = template.exchange("/v1/checkout"
                 , HttpMethod.POST
                 , entity

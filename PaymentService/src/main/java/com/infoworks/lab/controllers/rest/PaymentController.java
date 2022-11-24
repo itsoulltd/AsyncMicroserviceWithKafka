@@ -5,7 +5,7 @@ import com.infoworks.lab.beans.tasks.definition.TaskQueue;
 import com.infoworks.lab.domain.tasks.ConsolePrintTask;
 import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
-import com.infoworks.lab.rest.models.events.Event;
+import com.infoworks.lab.rest.models.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -33,8 +33,8 @@ public class PaymentController implements TaskCompletionListener {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<Response> checkout(@RequestBody Event checkout) {
-        Response response = (Response) new Response().setEvent(checkout);
+    public ResponseEntity<Response> checkout(@RequestBody SearchQuery purchase) {
+        Response response = (Response) new Response().setEvent(purchase);
         //TODO:
         return new ResponseEntity(response, HttpStatus.OK);
     }
