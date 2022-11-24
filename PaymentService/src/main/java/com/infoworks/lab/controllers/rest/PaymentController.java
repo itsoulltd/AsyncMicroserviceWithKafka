@@ -38,17 +38,16 @@ public class PaymentController {
 
     @PostMapping("/checkout")
     public ResponseEntity<Response> checkout(@RequestBody SearchQuery purchase) {
-        Response response = (Response) new Response().setMessage("Action Queued!");
-        //Make decision based on message
+        Response response = new Response().setMessage("Action Queued!");
+        //Type-2:DispatchTaskInto-KafkaQueue:-
         kafkaTemplate.send(orderQueue, purchase.toString());
-        //or kafkaTemplate.send(orderAbortQueue, "Alert!!!");
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @KafkaListener(topics = {"${topic.execute}"}, concurrency = "1")
     public void startListener(@Payload String message, Acknowledgment ack) {
         //Retrieve the message content
-        LOG.info("EXE-QUEUE: Message received {} ", message);
+        LOG.info("PAYMENT-EXE-QUEUE: Message received {} ", message);
         //TODO:
         ack.acknowledge();
     }
@@ -56,7 +55,7 @@ public class PaymentController {
     @KafkaListener(topics = {"${topic.abort}"}, concurrency = "1")
     public void abortListener(@Payload String message, Acknowledgment ack) {
         //Retrieve the message content
-        LOG.info("ABORT-QUEUE: Message received {} ", message);
+        LOG.info("PAYMENT-ABORT-QUEUE: Message received {} ", message);
         //TODO:
         ack.acknowledge();
     }

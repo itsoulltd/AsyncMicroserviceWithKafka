@@ -25,6 +25,7 @@ public class ProductController {
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
+        //Type-1:DispatchTaskInto-KafkaQueue:-
         ConsolePrintTask task = new ConsolePrintTask();
         task.setMessage(new Message().setPayload("ProductService" + message));
         queue.add(task);
