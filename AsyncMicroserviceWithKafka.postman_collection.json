@@ -405,6 +405,34 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "purchase/async",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"descriptors\": [\r\n    {\r\n      \"keys\": [],\r\n      \"order\": \"ASC\"\r\n    }\r\n  ],\r\n  \"page\": 0,\r\n  \"properties\": [\r\n    {\r\n      \"key\": \"user-id\",\r\n      \"logic\": \"AND\",\r\n      \"nextKey\": null,\r\n      \"operator\": \"EQUAL\",\r\n      \"type\": \"STRING\",\r\n      \"value\": \"001883\"\r\n    },\r\n    {\r\n      \"key\": \"amount\",\r\n      \"logic\": \"AND\",\r\n      \"nextKey\": null,\r\n      \"operator\": \"EQUAL\",\r\n      \"type\": \"BIG_DECIMAL\",\r\n      \"value\": \"120.00\"\r\n    }\r\n  ],\r\n  \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}/v1/purchase/async",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"v1",
+								"purchase",
+								"async"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
