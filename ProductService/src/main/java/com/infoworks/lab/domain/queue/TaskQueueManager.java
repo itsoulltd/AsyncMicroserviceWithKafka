@@ -36,7 +36,7 @@ public class TaskQueueManager extends AbstractTaskQueueManager {
     public void startListener(@Payload String message, Acknowledgment ack) {
         // retrieve the message content
         String text = message;
-        logger.log(Level.INFO, "EXE-QUEUE: Message received {0} ", text);
+        //logger.log(Level.INFO, "EXE-QUEUE: Message received {0} ", text);
         if (handleTextOnStart(text)){
             ack.acknowledge();
         }
@@ -46,7 +46,7 @@ public class TaskQueueManager extends AbstractTaskQueueManager {
     public void abortListener(@Payload String message, Acknowledgment ack) {
         // retrieve the message content
         String text = message;
-        logger.log(Level.INFO, "ABORT-QUEUE: Message received {0} ", text);
+        //logger.log(Level.INFO, "ABORT-QUEUE: Message received {0} ", text);
         if (handleTextOnStop(text)){
             ack.acknowledge();
         }
