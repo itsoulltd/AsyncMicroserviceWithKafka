@@ -40,6 +40,8 @@ public class PaymentController {
     public ResponseEntity<Response> checkout(@RequestBody SearchQuery checkout) {
         LOG.info("CHECKOUT: Message received {} ", checkout.toString());
         Response response = new Response().setMessage("CHECKOUT: Queued");
+        //Make Some Delay:
+        try { Thread.sleep(3000); } catch (InterruptedException e) {}
         //Type-2:DispatchTaskInto-KafkaQueue:-
         kafkaTemplate.send(orderQueue, checkout.toString());
         return new ResponseEntity(response, HttpStatus.OK);
