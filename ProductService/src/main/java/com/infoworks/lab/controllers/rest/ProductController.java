@@ -33,7 +33,8 @@ public class ProductController implements TaskCompletionListener {
     public ResponseEntity<Response> asyncPurchase(@RequestBody SearchQuery purchase){
         LOG.info("ASYNC PURCHASE: Message received {} ", purchase.toString());
         //Adding additional attribute:
-        purchase.add("order-id").isEqualTo("01928373");
+        purchase.add("order-id").isEqualTo("01928373")
+                .and("purchase_task").isEqualTo(System.currentTimeMillis());
         //Type-1:Dispatch PurchaseTask Into KafkaQueue:-
         PurchaseTask task = new PurchaseTask(purchase);
         queue.add(task);
