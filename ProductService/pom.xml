@@ -18,8 +18,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jsqleditor.version>1.1.4.6-RELEASE</jsqleditor.version>
-        <WebComponentKit.version>v1.12.8-RELEASE</WebComponentKit.version>
+        <jsqleditor.version>1.1.4.8-RELEASE</jsqleditor.version>
+        <WebComponentKit.version>v1.13.2-RELEASE</WebComponentKit.version>
     </properties>
 
     <repositories>
