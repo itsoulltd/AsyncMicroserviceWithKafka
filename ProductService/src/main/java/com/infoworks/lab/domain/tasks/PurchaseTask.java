@@ -18,6 +18,7 @@ public class PurchaseTask extends ExecutableTask<Message, Response> {
 
     @Override
     public Response execute(Message message) throws RuntimeException {
+        //Call RestTemplate: api/payment/v1/checkout
         RestTemplate template = new RestTemplateBuilder()
                 .rootUri("http://localhost:8092/api/payment")
                 .build();
