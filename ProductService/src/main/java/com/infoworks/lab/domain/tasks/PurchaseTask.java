@@ -23,6 +23,8 @@ public class PurchaseTask extends ExecutableTask<Message, Response> {
                 .rootUri("http://localhost:8092/api/payment")
                 .build();
         SearchQuery purchase = (SearchQuery) getMessage().getEvent(SearchQuery.class);
+        purchase.add("purchase_task").isEqualTo(System.currentTimeMillis());
+        //
         HttpEntity<SearchQuery> entity = new HttpEntity<>(purchase, new HttpHeaders());
         ResponseEntity<Response> res = template.exchange("/v1/checkout"
                 , HttpMethod.POST

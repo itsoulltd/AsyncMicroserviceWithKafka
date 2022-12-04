@@ -39,7 +39,7 @@ public class PaymentController {
     @PostMapping("/checkout")
     public ResponseEntity<Response> checkout(@RequestBody SearchQuery checkout) {
         LOG.info("CHECKOUT: Message received {} ", checkout.toString());
-        Response response = new Response().setMessage("CHECKOUT: Queued");
+        Response response = new Response().setMessage("CHECKOUT: Queued at " + System.currentTimeMillis());
         //Make Some Delay:
         try { Thread.sleep(3000); } catch (InterruptedException e) {}
         //Type-2:DispatchTaskInto-KafkaQueue:-
