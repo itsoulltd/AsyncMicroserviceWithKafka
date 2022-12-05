@@ -62,6 +62,7 @@ public class ProductController implements TaskCompletionListener {
         //Rest-api Call:
         PurchaseTask task = new PurchaseTask(purchase);
         Response response = task.execute(null);
+        LOG.info("Product-RestApi Exe Successful: {}", response.toString());
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
