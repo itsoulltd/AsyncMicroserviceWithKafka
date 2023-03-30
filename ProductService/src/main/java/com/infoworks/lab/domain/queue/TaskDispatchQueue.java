@@ -19,10 +19,10 @@ public class TaskDispatchQueue extends AbstractTaskQueue {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @Value("${topic.execute}")
+    @Value("${topic.product.execute}")
     private String exeQueue;
 
-    @Value("${topic.abort}")
+    @Value("${topic.product.abort}")
     private String abortQueue;
 
     @Override

@@ -32,7 +32,7 @@ public class TaskQueueManager extends AbstractTaskQueueManager {
         return task;
     }
 
-    @KafkaListener(topics = {"${topic.execute}"}, concurrency = "5")
+    @KafkaListener(topics = {"${topic.product.execute}"}, concurrency = "5")
     public void startListener(@Payload String message, Acknowledgment ack) {
         // retrieve the message content
         String text = message;
@@ -42,7 +42,7 @@ public class TaskQueueManager extends AbstractTaskQueueManager {
         }
     }
 
-    @KafkaListener(topics = {"${topic.abort}"}, concurrency = "3")
+    @KafkaListener(topics = {"${topic.product.abort}"}, concurrency = "3")
     public void abortListener(@Payload String message, Acknowledgment ack) {
         // retrieve the message content
         String text = message;

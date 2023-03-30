@@ -47,14 +47,14 @@ public class PaymentController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @KafkaListener(topics = {"${topic.execute}"}, concurrency = "1")
+    @KafkaListener(topics = {"${topic.payment.execute}"}, concurrency = "1")
     public void startListener(@Payload String message, Acknowledgment ack) {
         LOG.info("PAYMENT-EXE-QUEUE: Message received {} ", message);
         //TODO:
         ack.acknowledge();
     }
 
-    @KafkaListener(topics = {"${topic.abort}"}, concurrency = "1")
+    @KafkaListener(topics = {"${topic.payment.abort}"}, concurrency = "1")
     public void abortListener(@Payload String message, Acknowledgment ack) {
         LOG.info("PAYMENT-ABORT-QUEUE: Message received {} ", message);
         //TODO:

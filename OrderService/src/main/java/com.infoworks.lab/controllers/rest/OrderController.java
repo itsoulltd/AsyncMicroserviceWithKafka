@@ -41,7 +41,7 @@ public class OrderController {
         return new ResponseEntity(message, HttpStatus.OK);
     }
 
-    @KafkaListener(topics = {"${topic.execute}"}, concurrency = "1")
+    @KafkaListener(topics = {"${topic.order.execute}"}, concurrency = "1")
     public void startListener(@Payload String message, Acknowledgment ack) {
         LOG.info("ORDER-EXE-QUEUE: Message received {} ", message);
         try {
@@ -56,7 +56,7 @@ public class OrderController {
         ack.acknowledge();
     }
 
-    @KafkaListener(topics = {"${topic.abort}"}, concurrency = "1")
+    @KafkaListener(topics = {"${topic.order.abort}"}, concurrency = "1")
     public void abortListener(@Payload String message, Acknowledgment ack) {
         LOG.info("ORDER-ABORT-QUEUE: Message received {} ", message);
         //TODO:
