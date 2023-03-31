@@ -25,15 +25,12 @@ public class OrderController {
 
     private static Logger LOG = LoggerFactory.getLogger(OrderController.class.getSimpleName());
     private KafkaTemplate<String, String> kafkaTemplate;
-    private String deliveryQueue;
-    private String deliveryAbortQueue;
+    private String deliveryExeTopic;
 
     public OrderController(@Qualifier("kafkaTextTemplate") KafkaTemplate kafkaTemplate
-            , @Value("${topic.delivery.execute}") String deliveryQueue
-            , @Value("${topic.delivery.abort}") String deliveryAbortQueue ) {
+            , @Value("${topic.delivery.execute}") String deliveryExeTopic) {
         this.kafkaTemplate = kafkaTemplate;
-        this.deliveryQueue = deliveryQueue;
-        this.deliveryAbortQueue = deliveryAbortQueue;
+        this.deliveryExeTopic = deliveryExeTopic;
     }
 
     @GetMapping("/print/{message}")
@@ -49,7 +46,7 @@ public class OrderController {
             SearchQuery query = Message.unmarshal(SearchQuery.class, message);
             query.add("delivery-id").isEqualTo("92137")
                     .and("status").isEqualTo("SUCCESS");
-            kafkaTemplate.send(deliveryQueue, query.toString());
+            kafkaTemplate.send(deliveryExeTopic, query.toString());
         } catch (IOException e) {
             LOG.error(e.getMessage());
         }
