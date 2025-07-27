@@ -46,7 +46,7 @@ services:
         - web-app-net
 
    kafka:
-      image: bitnami/kafka:latest
+      image: bitnami/kafka:3.4.0  #Working version when latest:3.4.0. Also last version with zookeeper.
       ports:
         - 9092:9092
         - 9093:9093
