@@ -1,6 +1,5 @@
 package com.infoworks.lab.webapp.config;
 
-import com.infoworks.lab.jsql.JsqlConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -31,11 +30,6 @@ public class JPAConfig {
 
     public JPAConfig(@Autowired Environment env) {
         this.env = env;
-    }
-
-    @Bean
-    JsqlConfig getJsqlConfig(DataSource dataSource){
-        return new JsqlConfig(dataSource);
     }
 
     @Bean("AppDBNameKey")

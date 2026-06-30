@@ -1,7 +1,7 @@
 package com.infoworks.lab.controllers.rest;
 
-import com.infoworks.lab.rest.models.Response;
-import com.infoworks.lab.rest.models.SearchQuery;
+import com.infoworks.objects.Response;
+import com.infoworks.sql.query.pagination.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,7 +1,8 @@
 package com.infoworks.lab.controllers.rest;
 
-import com.infoworks.lab.rest.models.Message;
-import com.infoworks.lab.rest.models.SearchQuery;
+import com.infoworks.objects.MessageParser;
+import com.infoworks.objects.Response;
+import com.infoworks.sql.query.pagination.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,7 +44,7 @@ public class OrderController {
         LOG.info("ORDER-EXE-QUEUE: Message received {} ", message);
         try {
             //Type-2:DispatchTaskInto-KafkaQueue:-
-            SearchQuery query = Message.unmarshal(SearchQuery.class, message);
+            SearchQuery query = MessageParser.unmarshal(SearchQuery.class, message);
             query.add("delivery-id").isEqualTo("92137")
                     .and("status").isEqualTo("SUCCESS");
             kafkaTemplate.send(deliveryExeTopic, query.toString());

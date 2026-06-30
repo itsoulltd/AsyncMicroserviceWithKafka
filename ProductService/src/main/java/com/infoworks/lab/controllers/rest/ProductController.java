@@ -1,11 +1,11 @@
 package com.infoworks.lab.controllers.rest;
 
-import com.infoworks.lab.beans.tasks.definition.TaskCompletionListener;
-import com.infoworks.lab.beans.tasks.definition.TaskQueue;
 import com.infoworks.lab.domain.tasks.PurchaseTask;
-import com.infoworks.lab.rest.models.Message;
-import com.infoworks.lab.rest.models.Response;
-import com.infoworks.lab.rest.models.SearchQuery;
+import com.infoworks.objects.Message;
+import com.infoworks.objects.Response;
+import com.infoworks.sql.query.pagination.SearchQuery;
+import com.infoworks.tasks.queue.TaskQueue;
+import com.infoworks.tasks.stack.TaskCompletionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

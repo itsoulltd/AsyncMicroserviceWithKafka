@@ -1,7 +1,8 @@
 package com.infoworks.lab.controllers.rest;
 
-import com.infoworks.lab.rest.models.Message;
-import com.infoworks.lab.rest.models.SearchQuery;
+import com.infoworks.objects.MessageParser;
+import com.infoworks.objects.Response;
+import com.infoworks.sql.query.pagination.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,7 +40,7 @@ public class DeliveryController {
         LOG.info("DELIVERY-EXE-QUEUE: Message received {} ", message);
         try {
             //Dispatch Into Queue:
-            SearchQuery query = Message.unmarshal(SearchQuery.class, message);
+            SearchQuery query = MessageParser.unmarshal(SearchQuery.class, message);
             query.add("lat").isEqualTo(0.92137)
                     .and("lon").isEqualTo(9.00)
                     .and("customer-name").isEqualTo("Dr. Cooper")
