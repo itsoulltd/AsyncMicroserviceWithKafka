@@ -12,6 +12,7 @@
         <module>OrderService</module>
         <module>PaymentService</module>
         <module>DeliveryDispatchService</module>
+        <module>TasksKit</module>
     </modules>
     <packaging>pom</packaging>
 
