@@ -4,6 +4,8 @@ import com.infoworks.objects.Message;
 import com.infoworks.orm.Property;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.PaymentResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.UUID;
@@ -12,6 +14,8 @@ import java.util.UUID;
  *
  */
 public class PaymentTask extends ExecutableTask<Message, PaymentResponse> {
+
+    protected static Logger LOG = LoggerFactory.getLogger("PaymentTask");
 
     public PaymentTask() {}
 
@@ -39,7 +43,7 @@ public class PaymentTask extends ExecutableTask<Message, PaymentResponse> {
             /**
              * All your payment tasks:
              */
-            System.out.println("✅ " + msg + "  ==>  " + "Commit: Payment Create In DB [" + Thread.currentThread().getName() + "]");
+            LOG.info("✅ " + msg + "  ==>  " + "Commit: Payment Create In DB [" + Thread.currentThread().getName() + "]");
             return (PaymentResponse) new PaymentResponse().setOptStatus(OptStatus.CREATE).setPaymentID(paymentID).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
             throw new RuntimeException(msg);
@@ -51,7 +55,7 @@ public class PaymentTask extends ExecutableTask<Message, PaymentResponse> {
         String orderId = getPropertyValue("orderId").toString();
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
-        System.out.println("❌ " + msg + "  ==>  " + "Commit: Payment Create Failed In DB [" + Thread.currentThread().getName() + "]");
+        LOG.info("❌ " + msg + "  ==>  " + "Commit: Payment Create Failed In DB [" + Thread.currentThread().getName() + "]");
         return (PaymentResponse) new PaymentResponse().setOptStatus(OptStatus.CANCEL).setOrderID(orderId).setStatus(500).setMessage(strMsg);
     }
 }

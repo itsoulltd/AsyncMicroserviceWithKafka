@@ -4,6 +4,8 @@ import com.infoworks.objects.Message;
 import com.infoworks.orm.Property;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.OrderResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
@@ -11,6 +13,8 @@ import java.util.Random;
  *
  */
 public class OrderTask extends ExecutableTask<Message, OrderResponse> {
+
+    protected static Logger LOG = LoggerFactory.getLogger("OrderTask");
 
     //Must need Zero param constructor in Case of JMSTask
     public OrderTask() {}
@@ -35,7 +39,7 @@ public class OrderTask extends ExecutableTask<Message, OrderResponse> {
                 : true;
         //True will be Success, failed other-wise:
         if (nextRandom) {
-            System.out.println("✅ " + msg + "  ==>  " + "Commit: Order Create In DB [" + Thread.currentThread().getName() + "]");
+            LOG.info("✅ " + msg + "  ==>  " + "Commit: Order Create In DB [" + Thread.currentThread().getName() + "]");
             return (OrderResponse) new OrderResponse().setOptStatus(OptStatus.CREATE).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
             throw new RuntimeException(msg);
@@ -47,7 +51,7 @@ public class OrderTask extends ExecutableTask<Message, OrderResponse> {
         String orderId = getPropertyValue("orderId").toString();
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
-        System.out.println("❌ " + msg + "  ==>  " + "Commit: Order Create Failed In DB [" + Thread.currentThread().getName() + "]");
+        LOG.info("❌ " + msg + "  ==>  " + "Commit: Order Create Failed In DB [" + Thread.currentThread().getName() + "]");
         return (OrderResponse) new OrderResponse().setOrderID(orderId).setStatus(500).setMessage(strMsg);
     }
 }

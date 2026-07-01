@@ -4,11 +4,15 @@ import com.infoworks.objects.Message;
 import com.infoworks.orm.Property;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.ShipmentResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 public class ShipmentCancelTask extends ExecutableTask<Message, ShipmentResponse> {
+
+    protected static Logger LOG = LoggerFactory.getLogger("ShipmentCancelTask");
 
     public ShipmentCancelTask() {}
 
@@ -27,7 +31,7 @@ public class ShipmentCancelTask extends ExecutableTask<Message, ShipmentResponse
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
         //True will be Success, failed other-wise:
-        System.out.println("⛔ " + msg + "  ==>  " + "Commit: Shipment Cancel In DB [" + Thread.currentThread().getName() + "]");
+        LOG.info("⛔ " + msg + "  ==>  " + "Commit: Shipment Cancel In DB [" + Thread.currentThread().getName() + "]");
         return (ShipmentResponse) new ShipmentResponse().setOptStatus(OptStatus.CANCEL).setShippingID(shipmentId).setPaymentID(paymentId).setOrderID(orderId).setStatus(200).setMessage(strMsg);
     }
 }

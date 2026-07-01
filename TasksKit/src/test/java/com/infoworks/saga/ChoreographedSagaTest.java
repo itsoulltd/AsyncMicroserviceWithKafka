@@ -8,6 +8,8 @@ import com.infoworks.tasks.models.OrderResponse;
 import com.infoworks.tasks.models.PaymentResponse;
 import com.infoworks.tasks.models.ShipmentResponse;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -48,6 +50,7 @@ public class ChoreographedSagaTest {
      * This means you must explicitly code for rollback in each service.
      */
 
+    static Logger LOG = LoggerFactory.getLogger("ChoreographedSagaTest");
 
     @Test
     public void choreographedSagaTest() {
@@ -105,7 +108,7 @@ public class ChoreographedSagaTest {
             if (message instanceof ShipmentResponse) {
                 ShipmentResponse response = (ShipmentResponse) message;
                 if (response.getOptStatus() == OptStatus.CREATE) {
-                    System.out.println("\uD83D\uDE0E " + "[order-id: " + response.getOrderID() + "] "
+                    LOG.info("\uD83D\uDE0E " + "[order-id: " + response.getOrderID() + "] "
                             + "==>|| Shipping Complete For OrderID:" + response.getOrderID() + " (" + response.getMessage() + ") ||<==");
                     counter.decrementAndGet();
                 } else if(response.getOptStatus() == OptStatus.CANCEL) {

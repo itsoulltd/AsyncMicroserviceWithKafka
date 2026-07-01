@@ -4,11 +4,15 @@ import com.infoworks.objects.Message;
 import com.infoworks.orm.Property;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.OrderResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 public class OrderCancelTask extends ExecutableTask<Message, OrderResponse> {
+
+    protected static Logger LOG = LoggerFactory.getLogger("OrderCancelTask");
 
     public OrderCancelTask() {}
 
@@ -23,7 +27,7 @@ public class OrderCancelTask extends ExecutableTask<Message, OrderResponse> {
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
         //True will be Success, failed other-wise:
-        System.out.println("⛔ " + msg + "  ==>  " + "Commit: Order Cancel In DB [" + Thread.currentThread().getName() + "]");
+        LOG.info("⛔ " + msg + "  ==>  " + "Commit: Order Cancel In DB [" + Thread.currentThread().getName() + "]");
         return (OrderResponse) new OrderResponse().setOptStatus(OptStatus.CANCEL).setOrderID(orderId).setStatus(200).setMessage(strMsg);
     }
 }

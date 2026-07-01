@@ -5,6 +5,8 @@ import com.infoworks.orm.Property;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.PaymentResponse;
 import com.infoworks.tasks.models.ShipmentResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.UUID;
@@ -13,6 +15,8 @@ import java.util.UUID;
  *
  */
 public class ShipmentTask extends ExecutableTask<Message, ShipmentResponse> {
+
+    protected static Logger LOG = LoggerFactory.getLogger("ShipmentTask");
 
     public ShipmentTask() {}
 
@@ -42,7 +46,7 @@ public class ShipmentTask extends ExecutableTask<Message, ShipmentResponse> {
             /**
              * All your shipping tasks:
              */
-            System.out.println("✅ " + msg + "  ==>  " + "Commit: Shipment Create In DB [" + Thread.currentThread().getName() + "]");
+            LOG.info("✅ " + msg + "  ==>  " + "Commit: Shipment Create In DB [" + Thread.currentThread().getName() + "]");
             return (ShipmentResponse) new ShipmentResponse().setOptStatus(OptStatus.CREATE).setShippingID(shipmentID).setPaymentID(paymentId).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
             throw new RuntimeException(msg);
@@ -55,7 +59,7 @@ public class ShipmentTask extends ExecutableTask<Message, ShipmentResponse> {
         String paymentId = getPropertyValue("paymentId").toString();
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
-        System.out.println("❌ " + msg + "  ==>  " + "Commit: Shipment Create Failed In DB [" + Thread.currentThread().getName() + "]");
+        LOG.info("❌ " + msg + "  ==>  " + "Commit: Shipment Create Failed In DB [" + Thread.currentThread().getName() + "]");
         return (ShipmentResponse) new ShipmentResponse().setOptStatus(OptStatus.CANCEL).setPaymentID(paymentId).setOrderID(orderId).setStatus(500).setMessage(strMsg);
     }
 
