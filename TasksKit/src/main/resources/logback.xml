@@ -1,44 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - [%thread] - [%-5level] - %logger{25} - CID[%X{correlationId}] - UID[%X{userId}] - %msg%n</pattern>-->
-        </encoder>
-    </appender>
 
     <!-- -->
-    <appender name="JSON-CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp/>
-                <version/>
-                <logLevel/>
-                <loggerName/>
-                <threadName/>
-                <message/>
-                <mdc/>
-                <arguments/>
-                <stackTrace/>
-            </providers>
-        </encoder>
-    </appender>
-
-    <!-- -->
-    <appender name="ASYNC-CONSOLE" class="ch.qos.logback.classic.AsyncAppender">
-        <queueSize>8192</queueSize>
-        <!-- don't discard INFO/WARN/ERROR -->
-        <discardingThreshold>0</discardingThreshold>
-        <!-- never block application thread -->
-        <neverBlock>true</neverBlock>
-        <includeCallerData>false</includeCallerData>
-        <appender-ref ref="CONSOLE"/>
-        <!--<appender-ref ref="JSON-CONSOLE"/>-->
-    </appender>
+    <include resource="logback-appenders.xml"/>
 
     <!-- -->
     <!-- As you can see it contains the maxFileSize, maxHistory and totalSizeCap providing
@@ -47,9 +11,9 @@
     and when the total size of all files reaches 10MB the oldest files will be removed.
     -->
     <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${HOME_LOGS_DIR}/${USER}-${HOSTNAME}-${INSTANCE_NAME}.log</file>
+        <file>${HOME_LOGS_DIR}/${USER}-${HOSTNAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${HOME_LOGS_DIR}/archive/${USER}-${HOSTNAME}-${INSTANCE_NAME}-%d{yyyy-MM-dd-HH}-%i.log.tar.gz</fileNamePattern>
+            <fileNamePattern>${HOME_LOGS_DIR}/archive/${USER}-${HOSTNAME}-%d{yyyy-MM-dd-HH}-%i.log.tar.gz</fileNamePattern>
             <maxFileSize>2MB</maxFileSize>
             <maxHistory>2</maxHistory>
             <totalSizeCap>10MB</totalSizeCap>
@@ -73,5 +37,4 @@
         <!--<appender-ref ref="FILE"/>-->
         <appender-ref ref="ASYNC-CONSOLE"/>
     </root>
-    <!-- -->
 </configuration>

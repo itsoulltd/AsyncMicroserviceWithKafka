@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- -->
+    <include resource="logback-appenders.xml"/>
+
+    <!-- -->
     <logger name="org.springframework" level="OFF"/>
+
+    <!-- -->
+    <!-- OFF ERROR WARN INFO DEBUG TRACE -->
+    <logger name="com.infoworks" level="INFO"/>
+
+    <!-- -->
+    <root level="INFO">
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="ASYNC-CONSOLE"/>
+    </root>
 </configuration>
