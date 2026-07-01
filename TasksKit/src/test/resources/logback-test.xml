@@ -12,8 +12,8 @@
 
     <!-- -->
     <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-        <!--<appender-ref ref="ASYNC-CONSOLE"/>-->
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="ASYNC-CONSOLE"/>
         <!--<appender-ref ref="ASYNC-JSON-CONSOLE"/>-->
     </root>
 </configuration>
