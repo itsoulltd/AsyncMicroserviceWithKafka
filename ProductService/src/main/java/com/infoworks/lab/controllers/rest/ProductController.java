@@ -1,5 +1,6 @@
 package com.infoworks.lab.controllers.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoworks.lab.domain.tasks.PurchaseTask;
 import com.infoworks.objects.Message;
 import com.infoworks.objects.Response;
@@ -26,27 +27,30 @@ public class ProductController implements TaskCompletionListener {
     private TaskQueue queue;
     private KafkaTemplate<String, String> kafkaTemplate;
     private String orderQueue;
+    private ObjectMapper mapper;
 
     public ProductController(@Qualifier("taskDispatchQueue") TaskQueue queue
             , @Qualifier("kafkaTextTemplate") KafkaTemplate kafkaTemplate
-            , @Value("${topic.order.execute}") String orderQueue) {
+            , @Value("${topic.order.execute}") String orderQueue
+            , ObjectMapper mapper) {
         this.queue = queue;
         //Attaching Queue with task-completion-listener:- when a task get executed by the consumer.
         this.queue.onTaskComplete(this);
         this.kafkaTemplate = kafkaTemplate;
         this.orderQueue = orderQueue;
+        this.mapper = mapper;
     }
 
     @Override
     public void failed(Message message) {
         if(message != null) LOG.error("Product-Consumer Exe Failed: {}", message);
+        //TODO:
     }
 
     @Override
     public void finished(Message message) {
         if(message != null) LOG.info("Product-Consumer Exe Successful: {}", message);
-        //TODO: We can dispatch any other work-flow: e.g. Saga or Transactional-Outbox
-        //...
+        //TODO:
     }
 
     /** Legacy code */

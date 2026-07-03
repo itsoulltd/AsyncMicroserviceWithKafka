@@ -158,6 +158,7 @@
             <groupId>com.infoworks.lab</groupId>
             <artifactId>tasks-kit</artifactId>
             <version>v1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
