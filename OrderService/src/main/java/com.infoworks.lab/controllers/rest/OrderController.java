@@ -1,7 +1,6 @@
 package com.infoworks.lab.controllers.rest;
 
 import com.infoworks.objects.MessageParser;
-import com.infoworks.objects.Response;
 import com.infoworks.sql.query.pagination.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +25,12 @@ public class OrderController {
 
     private static Logger LOG = LoggerFactory.getLogger(OrderController.class.getSimpleName());
     private KafkaTemplate<String, String> kafkaTemplate;
-    private String deliveryExeTopic;
+    private String paymentQueue;
 
     public OrderController(@Qualifier("kafkaTextTemplate") KafkaTemplate kafkaTemplate
-            , @Value("${topic.delivery.execute}") String deliveryExeTopic) {
+            , @Value("${topic.payment.execute}") String paymentQueue) {
         this.kafkaTemplate = kafkaTemplate;
-        this.deliveryExeTopic = deliveryExeTopic;
+        this.paymentQueue = paymentQueue;
     }
 
     @GetMapping("/print/{message}")
@@ -47,7 +46,7 @@ public class OrderController {
             SearchQuery query = MessageParser.unmarshal(SearchQuery.class, message);
             query.add("delivery-id").isEqualTo("92137")
                     .and("status").isEqualTo("SUCCESS");
-            kafkaTemplate.send(deliveryExeTopic, query.toString());
+            kafkaTemplate.send(paymentQueue, query.toString());
         } catch (IOException e) {
             LOG.error(e.getMessage());
         }
