@@ -20,12 +20,12 @@ public class PaymentController {
 
     private static Logger LOG = LoggerFactory.getLogger(PaymentController.class.getSimpleName());
     private KafkaTemplate<String, String> kafkaTemplate;
-    private String orderExeTopic;
+    private String deliveryQueue;
 
     public PaymentController(@Qualifier("kafkaTextTemplate") KafkaTemplate kafkaTemplate
-            , @Value("${topic.order.execute}") String orderExeTopic) {
+            , @Value("${topic.delivery.execute}") String deliveryQueue) {
         this.kafkaTemplate = kafkaTemplate;
-        this.orderExeTopic = orderExeTopic;
+        this.deliveryQueue = deliveryQueue;
     }
 
     @GetMapping("/print/{message}")
@@ -40,7 +40,7 @@ public class PaymentController {
         //Make Some Delay:
         try { Thread.sleep(3000); } catch (InterruptedException e) {}
         //Type-2:DispatchTaskInto-KafkaQueue:-
-        kafkaTemplate.send(orderExeTopic, checkout.toString());
+        kafkaTemplate.send(deliveryQueue, checkout.toString());
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
