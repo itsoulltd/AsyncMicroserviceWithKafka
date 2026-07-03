@@ -153,6 +153,12 @@
             <artifactId>logstash-logback-encoder</artifactId>
             <version>8.1</version>
         </dependency>
+        <!-- -->
+        <dependency>
+            <groupId>com.infoworks.lab</groupId>
+            <artifactId>tasks-kit</artifactId>
+            <version>v1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
