@@ -70,4 +70,3 @@
 ![Screenshot-01](/README.images/screenshot-01.png)
 ![Screenshot-01](/README.images/screenshot-02.png)
 ![Screenshot-01](/README.images/screenshot-03.png)
-![Screenshot-01](/README.images/screenshot-04.png)
