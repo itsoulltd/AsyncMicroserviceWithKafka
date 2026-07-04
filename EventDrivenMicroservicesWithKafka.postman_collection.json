@@ -1,0 +1,65 @@
+{
+  "info": {
+    "_postman_id": "a815b98e-fcde-46de-8bf8-4f5375c076b4",
+    "name": "EventDrivenMicroservicesWithKafka",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30766380"
+  },
+  "item": [
+    {
+      "name": "{{productUrl}}/v1/purchase/{product_id}",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"descriptors\": [\r\n    {\r\n      \"keys\": [],\r\n      \"order\": \"ASC\"\r\n    }\r\n  ],\r\n  \"page\": 0,\r\n  \"properties\": [\r\n    {\r\n      \"key\": \"product_name\",\r\n      \"logic\": \"AND\",\r\n      \"nextKey\": null,\r\n      \"operator\": \"EQUAL\",\r\n      \"type\": \"STRING\",\r\n      \"value\": \"Coffee with Croissant\"\r\n    },\r\n    {\r\n      \"key\": \"product_description\",\r\n      \"logic\": \"AND\",\r\n      \"nextKey\": null,\r\n      \"operator\": \"EQUAL\",\r\n      \"type\": \"STRING\",\r\n      \"value\": \"Order For Coffee + Croissant\"\r\n    },\r\n    {\r\n      \"key\": \"user-id\",\r\n      \"logic\": \"AND\",\r\n      \"nextKey\": null,\r\n      \"operator\": \"EQUAL\",\r\n      \"type\": \"STRING\",\r\n      \"value\": \"001883\"\r\n    },\r\n    {\r\n      \"key\": \"amount\",\r\n      \"logic\": \"AND\",\r\n      \"nextKey\": null,\r\n      \"operator\": \"EQUAL\",\r\n      \"type\": \"BIG_DECIMAL\",\r\n      \"value\": \"120.00\"\r\n    }\r\n  ],\r\n  \"size\": 10\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{productUrl}}/v1/purchase/101",
+          "host": [
+            "{{productUrl}}"
+          ],
+          "path": [
+            "v1",
+            "purchase",
+            "101"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "{{productUrl}}/v1/inventory/{product_id}/itemCount",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{productUrl}}/v1/inventory/101/itemCount",
+          "host": [
+            "{{productUrl}}"
+          ],
+          "path": [
+            "v1",
+            "inventory",
+            "101",
+            "itemCount"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "productUrl",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
