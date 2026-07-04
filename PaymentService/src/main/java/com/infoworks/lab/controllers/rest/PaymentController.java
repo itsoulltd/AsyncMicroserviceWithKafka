@@ -55,7 +55,6 @@ public class PaymentController implements TaskCompletionListener {
     @Override
     public void finished(Message message) {
         if (message != null) LOG.info("Order-Consumer Exe Successful: {}", message);
-        //TODO:
         //Payment-Flow:
         if (message instanceof PaymentResponse) {
             PaymentResponse response = (PaymentResponse) message;
