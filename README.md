@@ -1,4 +1,4 @@
-####How To Run
+#### How To Run
     
     # Start Kafka and Other tools:
     ~>$ docker-compose -f docker-compose-tools.yaml up -d
@@ -13,39 +13,61 @@
     # Stop all tools
     ~>$ docker-compose -f docker-compose-tools.yaml down
     
-####Call Start via API-Call
+#### [Click to open /api/product](http://localhost:8091/api/product/swagger-ui.html)
+
+#### Call Start via api-call to http://localhost:8091/api/product/v1/purchase/{product_id}
 
     ## Http curl:
-    curl --location --request POST 'http://localhost:8091/api/product/v1/purchase' \
+    curl --location 'http://localhost:8091/api/product/v1/purchase/101' \
     --header 'Content-Type: application/json' \
-    --header 'Accept: */*' \
-    --data-raw '{
-      "descriptors": [
-        {
-          "keys": [],
-          "order": "ASC"
-        }
-      ],
-      "page": 0,
-      "properties": [
-        {
-          "key": "user-id",
-          "logic": "AND",
-          "nextKey": null,
-          "operator": "EQUAL",
-          "type": "STRING",
-          "value": "001882"
-        },
-        {
-          "key": "amount",
-          "logic": "AND",
-          "nextKey": null,
-          "operator": "EQUAL",
-          "type": "BIG_DECIMAL",
-          "value": "100.00"
-        }
-      ],
-      "size": 10
+    --data '{
+        "descriptors": [
+            {
+                "keys": [],
+                "order": "ASC"
+            }
+        ],
+        "page": 0,
+        "properties": [
+            {
+                "key": "product_name",
+                "logic": "AND",
+                "nextKey": null,
+                "operator": "EQUAL",
+                "type": "STRING",
+                "value": "Biscuit & Cake"
+            },
+            {
+                "key": "product_description",
+                "logic": "AND",
+                "nextKey": null,
+                "operator": "EQUAL",
+                "type": "STRING",
+                "value": "Order For Biscuit & Cake"
+            },
+            {
+                "key": "user-id",
+                "logic": "AND",
+                "nextKey": null,
+                "operator": "EQUAL",
+                "type": "STRING",
+                "value": "001883"
+            },
+            {
+                "key": "amount",
+                "logic": "AND",
+                "nextKey": null,
+                "operator": "EQUAL",
+                "type": "BIG_DECIMAL",
+                "value": "120.00"
+            }
+        ],
+        "size": 10
     }'
     
 ####
+
+![Screenshot-01](/README.images/screenshot-01.png)
+![Screenshot-01](/README.images/screenshot-02.png)
+![Screenshot-01](/README.images/screenshot-03.png)
+![Screenshot-01](/README.images/screenshot-04.png)
