@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoworks.objects.Message;
 import com.infoworks.objects.Response;
 import com.infoworks.sql.query.pagination.SearchQuery;
+import com.infoworks.tasks.OrderCancelTask;
+import com.infoworks.tasks.ShipmentTask;
+import com.infoworks.tasks.Task;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.PaymentResponse;
 import com.infoworks.tasks.queue.TaskQueue;
 import com.infoworks.tasks.stack.TaskCompletionListener;
+import com.infoworks.utils.JmsMessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,10 +61,14 @@ public class PaymentController implements TaskCompletionListener {
             PaymentResponse response = (PaymentResponse) message;
             if (response.getOptStatus() == OptStatus.CREATE) {
                 //shippingService.add(new ShipmentTask(response.getOrderID(), response.getPaymentID(), response.getMessage()));
-                //TODO
+                Task shippingTask = new ShipmentTask(response.getOrderID(), response.getPaymentID(), response.getMessage());
+                String jmsMessage = JmsMessageUtil.convert(shippingTask, mapper).toString();
+                kafkaTemplate.send(deliveryQueue, jmsMessage);
             } else if (response.getOptStatus() == OptStatus.CANCEL) {
                 //orderService.add(new OrderCancelTask(response.getOrderID(), response.getMessage()));
-                //TODO
+                Task orderCancelTask = new OrderCancelTask(response.getOrderID(), response.getMessage());
+                String jmsMessage = JmsMessageUtil.convert(orderCancelTask, mapper).toString();
+                kafkaTemplate.send(orderQueue, jmsMessage);
             } else {
                 //TODO
             }
@@ -73,6 +81,8 @@ public class PaymentController implements TaskCompletionListener {
     public ResponseEntity<String> print(@PathVariable("message") final String message){
         return new ResponseEntity(message, HttpStatus.OK);
     }
+
+    /** Legacy Code */
 
     @PostMapping("/checkout")
     public ResponseEntity<Response> checkout(@RequestBody SearchQuery checkout) {
