@@ -5,8 +5,11 @@ import com.infoworks.lab.domain.tasks.PurchaseTask;
 import com.infoworks.objects.Message;
 import com.infoworks.objects.Response;
 import com.infoworks.sql.query.pagination.SearchQuery;
+import com.infoworks.tasks.OrderTask;
+import com.infoworks.tasks.Task;
 import com.infoworks.tasks.queue.TaskQueue;
 import com.infoworks.tasks.stack.TaskCompletionListener;
+import com.infoworks.utils.JmsMessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,10 +17,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/v1")
@@ -51,6 +56,36 @@ public class ProductController implements TaskCompletionListener {
     public void finished(Message message) {
         if(message != null) LOG.info("Product-Consumer Exe Successful: {}", message);
         //TODO:
+    }
+
+    @GetMapping("/inventory/{product_id}/itemCount")
+    public ResponseEntity<Map> inventoryItemCount(@PathVariable String product_id) {
+        //TODO:
+        Map<String, Object> data = new HashMap<>();
+        data.put("itemCount", new Random().nextInt(10));
+        return ResponseEntity.ok(data);
+    }
+
+    @PostMapping("/purchase/{product_id}")
+    public ResponseEntity<Response> purchaseItem(@PathVariable String product_id
+            , @RequestBody SearchQuery payload) {
+
+        LOG.info("PURCHASE: Product_Id {}, Message received {} ", product_id, payload.toString());
+        Response response = new Response().setStatus(404);
+
+        //Create an OrderTask for product_id:
+        Random random = new Random(); //For the simulation of success & failure.
+        String productInfo = Optional.ofNullable(payload.get("product_name")).orElse("").toString();
+        if (productInfo.isEmpty())
+            return ResponseEntity.status(400).body(response.setError("product_name did not set in the payload."));
+
+        Task orderTask = new OrderTask(product_id, productInfo, random.nextBoolean());
+        String jmsMessage = JmsMessageUtil.convert(orderTask, mapper).toString();
+        kafkaTemplate.send(orderQueue, jmsMessage);
+        //...
+        response.setStatus(200)
+                .setMessage(String.format("Purchase for \"%s\" has been dispatched.", product_id));
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     /** Legacy code */
