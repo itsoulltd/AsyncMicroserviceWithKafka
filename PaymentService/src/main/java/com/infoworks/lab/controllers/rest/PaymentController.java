@@ -10,7 +10,7 @@ import com.infoworks.tasks.Task;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.PaymentResponse;
 import com.infoworks.tasks.queue.TaskQueue;
-import com.infoworks.tasks.stack.TaskCompletionListener;
+import com.infoworks.tasks.stack.TaskStack;
 import com.infoworks.utils.JmsMessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +21,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.function.BiConsumer;
+
 @RestController
 @RequestMapping("/v1")
-public class PaymentController implements TaskCompletionListener {
+public class PaymentController {
 
     private static Logger LOG = LoggerFactory.getLogger(PaymentController.class.getSimpleName());
     private TaskQueue queue;
@@ -38,33 +40,15 @@ public class PaymentController implements TaskCompletionListener {
             , @Value("${topic.order.execute}") String orderQueue
             , ObjectMapper mapper) {
         this.queue = queue;
-        //Attaching Queue with task-completion-listener:- when a task get executed by the consumer.
-        this.queue.onTaskComplete(this);
+        this.queue.onTaskComplete(onTaskCompletion);
         this.kafkaTemplate = kafkaTemplate;
         this.deliveryQueue = deliveryQueue;
         this.orderQueue = orderQueue;
         this.mapper = mapper;
     }
 
-    @Override
-    public void failed(Message message) {
-        //if(message != null) LOG.error("Payment-Consumer Exe Failed: {}", message);
-        //Payment-Flow: When Failed
-        if (message instanceof PaymentResponse) {
-            PaymentResponse response = (PaymentResponse) message;
-            if (response.getOptStatus() == OptStatus.CANCEL) {
-                //orderService.add(new OrderCancelTask(response.getOrderID(), response.getMessage()));
-                Task orderCancelTask = new OrderCancelTask(response.getOrderID(), response.getMessage());
-                String jmsMessage = JmsMessageUtil.convert(orderCancelTask, mapper).toString();
-                kafkaTemplate.send(orderQueue, jmsMessage);
-            }
-        }
-    }
-
-    @Override
-    public void finished(Message message) {
-        //if (message != null) LOG.info("Payment-Consumer Exe Successful: {}", message);
-        //Payment-Flow: When Succeed
+    private BiConsumer<Message, TaskStack.State> onTaskCompletion = (message, state) -> {
+        //Payment-Flow:
         if (message instanceof PaymentResponse) {
             PaymentResponse response = (PaymentResponse) message;
             if (response.getOptStatus() == OptStatus.CREATE) {
@@ -78,10 +62,12 @@ public class PaymentController implements TaskCompletionListener {
                 String jmsMessage = JmsMessageUtil.convert(orderCancelTask, mapper).toString();
                 kafkaTemplate.send(orderQueue, jmsMessage);
             } else {
-                //TODO
+                //TODO:
             }
+        } else {
+            //TODO: When Failed
         }
-    }
+    };
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){

@@ -7,7 +7,7 @@ import com.infoworks.tasks.Task;
 import com.infoworks.tasks.models.OptStatus;
 import com.infoworks.tasks.models.ShipmentResponse;
 import com.infoworks.tasks.queue.TaskQueue;
-import com.infoworks.tasks.stack.TaskCompletionListener;
+import com.infoworks.tasks.stack.TaskStack;
 import com.infoworks.utils.JmsMessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.function.BiConsumer;
+
 @RestController
 @RequestMapping("/v1")
-public class DeliveryController implements TaskCompletionListener {
+public class DeliveryController {
 
     private static Logger LOG = LoggerFactory.getLogger(DeliveryController.class.getSimpleName());
     private TaskQueue queue;
@@ -36,20 +38,20 @@ public class DeliveryController implements TaskCompletionListener {
             , @Value("${topic.payment.execute}") String paymentQueue
             , ObjectMapper mapper) {
         this.queue = queue;
-        //Attaching Queue with task-completion-listener:- when a task get executed by the consumer.
-        this.queue.onTaskComplete(this);
+        this.queue.onTaskComplete(onTaskCompletion);
         this.kafkaTemplate = kafkaTemplate;
         this.paymentQueue = paymentQueue;
         this.mapper = mapper;
     }
 
-    @Override
-    public void failed(Message message) {
-        //if(message != null) LOG.error("Delivery-Consumer Exe Failed: {}", message);
-        //Shipping-Flow: When Failed
+    private BiConsumer<Message, TaskStack.State> onTaskCompletion = (message, state) -> {
+        //Shipping-Flow:
         if (message instanceof ShipmentResponse) {
             ShipmentResponse response = (ShipmentResponse) message;
-            if(response.getOptStatus() == OptStatus.CANCEL) {
+            if (response.getOptStatus() == OptStatus.CREATE) {
+                LOG.info("\uD83D\uDE0E " + "[order-id: " + response.getOrderID() + "] "
+                        + "==>|| Shipping Complete For OrderID:" + response.getOrderID() + " (" + response.getMessage() + ") ||<==");
+            } else if(response.getOptStatus() == OptStatus.CANCEL) {
                 //paymentService.add(new PaymentCancelTask(response.getOrderID(), response.getPaymentID(), response.getMessage()));
                 Task paymentCancelTask = new PaymentCancelTask(response.getOrderID(), response.getPaymentID(), response.getMessage());
                 String jmsMessage = JmsMessageUtil.convert(paymentCancelTask, mapper).toString();
@@ -57,23 +59,10 @@ public class DeliveryController implements TaskCompletionListener {
             } else {
                 //TODO
             }
+        } else {
+            //TODO: When Failed
         }
-    }
-
-    @Override
-    public void finished(Message message) {
-        //if (message != null) LOG.info("Delivery-Consumer Exe Successful: {}", message);
-        //Shipping-Flow: When Succeed
-        if (message instanceof ShipmentResponse) {
-            ShipmentResponse response = (ShipmentResponse) message;
-            if (response.getOptStatus() == OptStatus.CREATE) {
-                LOG.info("\uD83D\uDE0E " + "[order-id: " + response.getOrderID() + "] "
-                        + "==>|| Shipping Complete For OrderID:" + response.getOrderID() + " (" + response.getMessage() + ") ||<==");
-            } else {
-                //TODO
-            }
-        }
-    }
+    };
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
