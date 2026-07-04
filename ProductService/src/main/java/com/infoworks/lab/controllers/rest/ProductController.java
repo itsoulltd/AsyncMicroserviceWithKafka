@@ -48,13 +48,13 @@ public class ProductController implements TaskCompletionListener {
 
     @Override
     public void failed(Message message) {
-        if(message != null) LOG.error("Product-Consumer Exe Failed: {}", message);
+        //if(message != null) LOG.error("Product-Consumer Exe Failed: {}", message);
         //TODO:
     }
 
     @Override
     public void finished(Message message) {
-        if(message != null) LOG.info("Product-Consumer Exe Successful: {}", message);
+        //if(message != null) LOG.info("Product-Consumer Exe Successful: {}", message);
         //TODO:
     }
 

@@ -48,14 +48,18 @@ public class PaymentController implements TaskCompletionListener {
 
     @Override
     public void failed(Message message) {
-        if(message != null) LOG.error("Order-Consumer Exe Failed: {}", message);
-        //TODO:
+        //if(message != null) LOG.error("Payment-Consumer Exe Failed: {}", message);
+        //Payment-Flow: When Failed
+        if (message instanceof PaymentResponse) {
+            PaymentResponse response = (PaymentResponse) message;
+            //TODO
+        }
     }
 
     @Override
     public void finished(Message message) {
-        if (message != null) LOG.info("Order-Consumer Exe Successful: {}", message);
-        //Payment-Flow:
+        //if (message != null) LOG.info("Payment-Consumer Exe Successful: {}", message);
+        //Payment-Flow: When Succeed
         if (message instanceof PaymentResponse) {
             PaymentResponse response = (PaymentResponse) message;
             if (response.getOptStatus() == OptStatus.CREATE) {
@@ -71,8 +75,6 @@ public class PaymentController implements TaskCompletionListener {
             } else {
                 //TODO
             }
-        } else {
-            //TODO: When Failed
         }
     }
 

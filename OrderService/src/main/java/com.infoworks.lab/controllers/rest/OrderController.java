@@ -45,14 +45,18 @@ public class OrderController implements TaskCompletionListener {
 
     @Override
     public void failed(Message message) {
-        if(message != null) LOG.error("Order-Consumer Exe Failed: {}", message);
-        //TODO:
+        //if(message != null) LOG.error("Order-Consumer Exe Failed: {}", message);
+        //Order-Flow: When Failed
+        if (message instanceof OrderResponse) {
+            OrderResponse response = (OrderResponse) message;
+            //TODO
+        }
     }
 
     @Override
     public void finished(Message message) {
-        if(message != null) LOG.info("Order-Consumer Exe Successful: {}", message);
-        //Order-Flow:
+        //if(message != null) LOG.info("Order-Consumer Exe Successful: {}", message);
+        //Order-Flow: When Succeed
         if (message instanceof OrderResponse) {
             OrderResponse response = (OrderResponse) message;
             if (response.getOptStatus() == OptStatus.CREATE) {
@@ -61,10 +65,8 @@ public class OrderController implements TaskCompletionListener {
                 String jmsMessage = JmsMessageUtil.convert(paymentTask, mapper).toString();
                 kafkaTemplate.send(paymentQueue, jmsMessage);
             } else {
-                //
+                //TODO
             }
-        } else {
-            //TODO: When Failed
         }
     }
 

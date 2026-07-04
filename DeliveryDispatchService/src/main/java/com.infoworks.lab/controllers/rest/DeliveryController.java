@@ -45,20 +45,11 @@ public class DeliveryController implements TaskCompletionListener {
 
     @Override
     public void failed(Message message) {
-        if(message != null) LOG.error("Order-Consumer Exe Failed: {}", message);
-        //TODO:
-    }
-
-    @Override
-    public void finished(Message message) {
-        if (message != null) LOG.info("Order-Consumer Exe Successful: {}", message);
-        //Shipping-Flow:
+        //if(message != null) LOG.error("Delivery-Consumer Exe Failed: {}", message);
+        //Shipping-Flow: When Failed
         if (message instanceof ShipmentResponse) {
             ShipmentResponse response = (ShipmentResponse) message;
-            if (response.getOptStatus() == OptStatus.CREATE) {
-                LOG.info("\uD83D\uDE0E " + "[order-id: " + response.getOrderID() + "] "
-                        + "==>|| Shipping Complete For OrderID:" + response.getOrderID() + " (" + response.getMessage() + ") ||<==");
-            } else if(response.getOptStatus() == OptStatus.CANCEL) {
+            if(response.getOptStatus() == OptStatus.CANCEL) {
                 //paymentService.add(new PaymentCancelTask(response.getOrderID(), response.getPaymentID(), response.getMessage()));
                 Task paymentCancelTask = new PaymentCancelTask(response.getOrderID(), response.getPaymentID(), response.getMessage());
                 String jmsMessage = JmsMessageUtil.convert(paymentCancelTask, mapper).toString();
@@ -66,8 +57,21 @@ public class DeliveryController implements TaskCompletionListener {
             } else {
                 //TODO
             }
-        } else {
-            //TODO: When Failed
+        }
+    }
+
+    @Override
+    public void finished(Message message) {
+        //if (message != null) LOG.info("Delivery-Consumer Exe Successful: {}", message);
+        //Shipping-Flow: When Succeed
+        if (message instanceof ShipmentResponse) {
+            ShipmentResponse response = (ShipmentResponse) message;
+            if (response.getOptStatus() == OptStatus.CREATE) {
+                LOG.info("\uD83D\uDE0E " + "[order-id: " + response.getOrderID() + "] "
+                        + "==>|| Shipping Complete For OrderID:" + response.getOrderID() + " (" + response.getMessage() + ") ||<==");
+            } else {
+                //TODO
+            }
         }
     }
 
