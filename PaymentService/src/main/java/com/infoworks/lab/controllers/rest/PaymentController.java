@@ -52,7 +52,12 @@ public class PaymentController implements TaskCompletionListener {
         //Payment-Flow: When Failed
         if (message instanceof PaymentResponse) {
             PaymentResponse response = (PaymentResponse) message;
-            //TODO
+            if (response.getOptStatus() == OptStatus.CANCEL) {
+                //orderService.add(new OrderCancelTask(response.getOrderID(), response.getMessage()));
+                Task orderCancelTask = new OrderCancelTask(response.getOrderID(), response.getMessage());
+                String jmsMessage = JmsMessageUtil.convert(orderCancelTask, mapper).toString();
+                kafkaTemplate.send(orderQueue, jmsMessage);
+            }
         }
     }
 
