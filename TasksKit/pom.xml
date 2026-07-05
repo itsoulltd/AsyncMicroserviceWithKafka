@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.github.itsoulltd</groupId>
             <artifactId>JFoundationKit</artifactId>
-            <version>[v1.0.1, )</version>
+            <version>v1.0.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
