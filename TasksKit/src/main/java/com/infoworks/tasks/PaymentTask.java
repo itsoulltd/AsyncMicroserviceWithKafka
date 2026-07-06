@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  *
  */
-public class PaymentTask extends ExecutableTask<Message, PaymentResponse> {
+public class PaymentTask extends BaseTask<Message, PaymentResponse> {
 
     protected static Logger LOG = LoggerFactory.getLogger("PaymentTask");
 

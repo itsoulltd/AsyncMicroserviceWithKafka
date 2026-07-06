@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  *
  */
-public class ShipmentTask extends ExecutableTask<Message, ShipmentResponse> {
+public class ShipmentTask extends BaseTask<Message, ShipmentResponse> {
 
     protected static Logger LOG = LoggerFactory.getLogger("ShipmentTask");
 

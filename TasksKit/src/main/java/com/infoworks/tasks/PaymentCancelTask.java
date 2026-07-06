@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  */
-public class PaymentCancelTask extends ExecutableTask<Message, PaymentResponse> {
+public class PaymentCancelTask extends BaseTask<Message, PaymentResponse> {
 
     protected static Logger LOG = LoggerFactory.getLogger("PaymentCancelTask");
 

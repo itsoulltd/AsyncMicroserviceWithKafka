@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  */
-public class OrderCancelTask extends ExecutableTask<Message, OrderResponse> {
+public class OrderCancelTask extends BaseTask<Message, OrderResponse> {
 
     protected static Logger LOG = LoggerFactory.getLogger("OrderCancelTask");
 

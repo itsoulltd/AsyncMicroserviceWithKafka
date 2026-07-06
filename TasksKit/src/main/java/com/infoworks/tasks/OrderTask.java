@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  *
  */
-public class OrderTask extends ExecutableTask<Message, OrderResponse> {
+public class OrderTask extends BaseTask<Message, OrderResponse> {
 
     protected static Logger LOG = LoggerFactory.getLogger("OrderTask");
 
