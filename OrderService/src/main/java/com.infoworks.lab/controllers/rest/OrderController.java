@@ -2,6 +2,7 @@ package com.infoworks.lab.controllers.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infoworks.objects.Message;
+import com.infoworks.sql.executor.QueryExecutor;
 import com.infoworks.tasks.PaymentTask;
 import com.infoworks.tasks.Task;
 import com.infoworks.tasks.models.OptStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.function.BiConsumer;
 
 @RestController
@@ -60,6 +62,13 @@ public class OrderController {
             //TODO: When Failed
         }
     };
+
+    /**
+     * Example of inject @Scope beans.
+     * e.g. @RequestScope bean SQLExecutor to do JDBC-Calls to database.
+     */
+    @Resource(name = "executor")
+    private QueryExecutor executor;
 
     @GetMapping("/print/{message}")
     public ResponseEntity<String> print(@PathVariable("message") final String message){
