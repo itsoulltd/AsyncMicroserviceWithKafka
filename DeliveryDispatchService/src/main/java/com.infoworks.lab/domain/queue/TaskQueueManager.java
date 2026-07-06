@@ -1,6 +1,5 @@
 package com.infoworks.lab.domain.queue;
 
-import com.infoworks.sql.executor.SQLExecutor;
 import com.infoworks.tasks.BaseTask;
 import com.infoworks.tasks.Task;
 import com.infoworks.tasks.queue.QueuedTaskStateListener;
@@ -11,22 +10,17 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Component
 public class TaskQueueManager extends AbstractJmsQueueManager {
 
     private static final Logger logger = Logger.getLogger("TaskQueueManager");
-    private DataSource dataSource;
 
-    public TaskQueueManager(@Qualifier("taskDispatchQueue") QueuedTaskStateListener listener
-            , DataSource dataSource) {
+    public TaskQueueManager(@Qualifier("taskDispatchQueue") QueuedTaskStateListener listener) {
         super(listener);
-        this.dataSource = dataSource;
     }
 
     @Override
@@ -36,9 +30,7 @@ public class TaskQueueManager extends AbstractJmsQueueManager {
         Task task = super.createTask(text);
         //Inject dependency into Task during MOM's task execution.
         if (task instanceof BaseTask) {
-            try {
-                ((BaseTask) task).setExecutor(new SQLExecutor(dataSource.getConnection()));
-            } catch (Exception e) { logger.log(Level.WARNING, e.getMessage(), e); }
+            //
         }
         return task;
     }
