@@ -40,8 +40,10 @@ public class OrderTask extends BaseTask<Message, OrderResponse> {
         //True will be Success, failed other-wise:
         if (nextRandom) {
             LOG.info("✅ " + msg + "  ==>  " + "Commit: Order Create In DB [" + Thread.currentThread().getName() + "]");
+            closeDbConnections();
             return (OrderResponse) new OrderResponse().setOptStatus(OptStatus.CREATE).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
+            closeDbConnections();
             throw new RuntimeException(msg);
         }
     }
@@ -52,6 +54,7 @@ public class OrderTask extends BaseTask<Message, OrderResponse> {
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
         LOG.info("❌ " + msg + "  ==>  " + "Commit: Order Create Failed In DB [" + Thread.currentThread().getName() + "]");
+        closeDbConnections();
         return (OrderResponse) new OrderResponse().setOrderID(orderId).setStatus(500).setMessage(strMsg);
     }
 }

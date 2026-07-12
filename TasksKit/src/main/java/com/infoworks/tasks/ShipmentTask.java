@@ -47,8 +47,10 @@ public class ShipmentTask extends BaseTask<Message, ShipmentResponse> {
              * All your shipping tasks:
              */
             LOG.info("✅ " + msg + "  ==>  " + "Commit: Shipment Create In DB [" + Thread.currentThread().getName() + "]");
+            closeDbConnections();
             return (ShipmentResponse) new ShipmentResponse().setOptStatus(OptStatus.CREATE).setShippingID(shipmentID).setPaymentID(paymentId).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
+            closeDbConnections();
             throw new RuntimeException(msg);
         }
     }
@@ -60,6 +62,7 @@ public class ShipmentTask extends BaseTask<Message, ShipmentResponse> {
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
         LOG.info("❌ " + msg + "  ==>  " + "Commit: Shipment Create Failed In DB [" + Thread.currentThread().getName() + "]");
+        closeDbConnections();
         return (ShipmentResponse) new ShipmentResponse().setOptStatus(OptStatus.CANCEL).setPaymentID(paymentId).setOrderID(orderId).setStatus(500).setMessage(strMsg);
     }
 

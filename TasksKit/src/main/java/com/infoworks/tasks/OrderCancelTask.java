@@ -28,6 +28,7 @@ public class OrderCancelTask extends BaseTask<Message, OrderResponse> {
         String msg = "[order-id: " + orderId + "] " + strMsg;
         //True will be Success, failed other-wise:
         LOG.info("⛔ " + msg + "  ==>  " + "Commit: Order Cancel In DB [" + Thread.currentThread().getName() + "]");
+        closeDbConnections();
         return (OrderResponse) new OrderResponse().setOptStatus(OptStatus.CANCEL).setOrderID(orderId).setStatus(200).setMessage(strMsg);
     }
 }

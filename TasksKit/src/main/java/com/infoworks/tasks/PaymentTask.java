@@ -44,8 +44,10 @@ public class PaymentTask extends BaseTask<Message, PaymentResponse> {
              * All your payment tasks:
              */
             LOG.info("✅ " + msg + "  ==>  " + "Commit: Payment Create In DB [" + Thread.currentThread().getName() + "]");
+            closeDbConnections();
             return (PaymentResponse) new PaymentResponse().setOptStatus(OptStatus.CREATE).setPaymentID(paymentID).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
+            closeDbConnections();
             throw new RuntimeException(msg);
         }
     }
@@ -56,6 +58,7 @@ public class PaymentTask extends BaseTask<Message, PaymentResponse> {
         String strMsg = getPropertyValue("message").toString();
         String msg = "[order-id: " + orderId + "] " + strMsg;
         LOG.info("❌ " + msg + "  ==>  " + "Commit: Payment Create Failed In DB [" + Thread.currentThread().getName() + "]");
+        closeDbConnections();
         return (PaymentResponse) new PaymentResponse().setOptStatus(OptStatus.CANCEL).setOrderID(orderId).setStatus(500).setMessage(strMsg);
     }
 }

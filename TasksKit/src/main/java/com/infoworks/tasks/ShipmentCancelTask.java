@@ -32,6 +32,7 @@ public class ShipmentCancelTask extends BaseTask<Message, ShipmentResponse> {
         String msg = "[order-id: " + orderId + "] " + strMsg;
         //True will be Success, failed other-wise:
         LOG.info("⛔ " + msg + "  ==>  " + "Commit: Shipment Cancel In DB [" + Thread.currentThread().getName() + "]");
+        closeDbConnections();
         return (ShipmentResponse) new ShipmentResponse().setOptStatus(OptStatus.CANCEL).setShippingID(shipmentId).setPaymentID(paymentId).setOrderID(orderId).setStatus(200).setMessage(strMsg);
     }
 }

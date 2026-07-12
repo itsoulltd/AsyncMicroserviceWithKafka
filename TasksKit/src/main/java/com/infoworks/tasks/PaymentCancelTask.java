@@ -30,6 +30,7 @@ public class PaymentCancelTask extends BaseTask<Message, PaymentResponse> {
         String msg = "[order-id: " + orderId + "] " + strMsg;
         //True will be Success, failed other-wise:
         LOG.info("⛔ " + msg + "  ==>  " + "Commit: Payment Cancel In DB [" + Thread.currentThread().getName() + "]");
+        closeDbConnections();
         return (PaymentResponse) new PaymentResponse().setOptStatus(OptStatus.CANCEL).setPaymentID(paymentId).setOrderID(orderId).setStatus(200).setMessage(strMsg);
     }
 }
