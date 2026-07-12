@@ -50,6 +50,7 @@ public class ShipmentTask extends BaseTask<Message, ShipmentResponse> {
             closeDbConnections();
             return (ShipmentResponse) new ShipmentResponse().setOptStatus(OptStatus.CREATE).setShippingID(shipmentID).setPaymentID(paymentId).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
+            LOG.info("✅ Default Execution Failed To Proceed.");
             closeDbConnections();
             throw new RuntimeException(msg);
         }

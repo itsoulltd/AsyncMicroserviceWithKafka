@@ -43,6 +43,7 @@ public class OrderTask extends BaseTask<Message, OrderResponse> {
             closeDbConnections();
             return (OrderResponse) new OrderResponse().setOptStatus(OptStatus.CREATE).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
+            LOG.info("✅ Default Execution Failed To Proceed.");
             closeDbConnections();
             throw new RuntimeException(msg);
         }

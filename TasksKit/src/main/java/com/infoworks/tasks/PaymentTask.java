@@ -47,6 +47,7 @@ public class PaymentTask extends BaseTask<Message, PaymentResponse> {
             closeDbConnections();
             return (PaymentResponse) new PaymentResponse().setOptStatus(OptStatus.CREATE).setPaymentID(paymentID).setOrderID(orderId).setStatus(200).setMessage(strMsg);
         } else {
+            LOG.info("✅ Default Execution Failed To Proceed.");
             closeDbConnections();
             throw new RuntimeException(msg);
         }

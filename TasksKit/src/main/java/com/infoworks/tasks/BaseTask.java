@@ -42,7 +42,7 @@ public abstract class BaseTask<In extends Message, Out extends Response> extends
 
     @Override
     public Out abort(In message) throws RuntimeException {
-        LOG.info("Default BaseTask Abort Execution.");
+        LOG.info("❌ Default Abort Execution.");
         closeDbConnections();
         return super.abort(message);
     }
